@@ -48,8 +48,8 @@ export default function SongCard({
         style={{
           color: color ? textColor(color, [tinycolor("white")]) : "white",
         }}
-        initial={{ x: -20, height: "0%", backgroundColor: "#222" }}
-        animate={{ x: 0, height: "100%", backgroundColor: color.toHexString() }}
+        initial={{ x: -20, backgroundColor: "#222" }}
+        animate={{ x: 0, backgroundColor: color.toHexString() }}
         className="relative m-2 flex w-40 flex-col items-center justify-start rounded-2xl p-2 hover:bg-green-700 md:w-48  md:p-2"
         key={song.id}
         onClick={song.preview_url && handleClick}
@@ -57,7 +57,7 @@ export default function SongCard({
         <motion.div
           variants={variants}
           animate={playing ? "playing" : "paused"}
-          className="relative h-full w-full"
+          className="relative w-full"
         >
           <div className="aspect-square w-full rounded-xl">
             <SongImage

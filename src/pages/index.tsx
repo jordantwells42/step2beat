@@ -9,6 +9,8 @@ import Login from "../components/login";
 import Footer from "../components/footer";
 import SpotifySearch from "../components/spotifysearch";
 import WorkoutGraph from "../components/workoutgraph";
+import { motion } from 'framer-motion';
+import Link from "next/link";
 
 /*
 TODO: 
@@ -26,7 +28,7 @@ function SignOut() {
   return (
     <div
       className={
-        "absolute bottom-10 m-10 flex flex-col items-center justify-center rounded-2xl bg-spotify-100  p-4 px-10 text-center font-main font-medium text-aluminium-900 "
+        "absolute top-0 right-0 flex flex-col rounded-2xl text-right justify-center items-end p-4 px-10 font-main font-medium text-aluminium-900 "
       }
     >
       Hey, {session?.user?.name}
@@ -46,12 +48,12 @@ const Home: NextPage = () => {
       walking: boolean;
     }[]
   >([
-    { speed: 3.0, walking: false },
-    { speed: 3.25, walking: false },
-    { speed: 3.5, walking: false },
+    { speed: 3.0, walking: true },
+    { speed: 3.25, walking: true },
+    { speed: 3.5, walking: true },
     { speed: 4.5, walking: false },
     { speed: 6, walking: false },
-    { speed: 2.5, walking: false },
+    { speed: 2.5, walking: true },
   ]);
   let [ref, bounds] = useMeasure();
 
@@ -59,21 +61,38 @@ const Home: NextPage = () => {
     setArtists((p) => p.filter((a) => a.id !== id));
   }
 
+  function speedsToTempos(){
+    let tempos = [];
+    if (!speeds) { return [] }
+    
+    for (let speed of speeds) {
+      if (speed.walking) {
+        tempos.push(speed.speed * 24.33 + 45.82);
+      } else {
+        tempos.push(speed.speed * 10.62 + 87.979)
+      }
+      
+    }
+    return tempos;
+  }
+
   if (session) {
     return (
       <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-x-hidden bg-spotify-50  font-main text-aluminium-900">
         <div className="relative flex h-full w-full flex-col items-center justify-center py-5 lg:w-3/4">
           <h1 className="py-5 text-4xl font-bold">Step 2 Beat</h1>
-          <div className="relative flex h-20 w-5/6 items-center justify-center">
+          <div className="relative z-20 flex h-20 w-5/6 items-center justify-center">
             <SpotifySearch display={true} setArtists={setArtists} />
           </div>
-          <div className="mb-40 flex w-full flex-col items-center justify-center p-5 md:h-[400px] md:flex-row">
+          <div className="flex w-full flex-col items-center justify-center p-5 md:h-[400px] md:flex-row">
             <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-1/3">
               <h1 className="text-2xl font-bold">Seed Artists</h1>
               <h2 className="pb-2 text-sm italic">Choose up to 5</h2>
               {artists.map((artist, idx) => (
-                <div
+                <motion.div
                   key={idx}
+                  initial={{x:-20}}
+                  animate={{x:0}}
                   className="flex w-full items-center justify-start gap-2"
                 >
                   {artist.image ? (
@@ -109,14 +128,14 @@ const Home: NextPage = () => {
                       />
                     </svg>
                   </button>
-                </div>
+                </motion.div>
               ))}
               {[0, 0, 0, 0, 0]
                 .splice(0, 5 - artists.length)
                 .map((none, idx) => (
                   <div
                     key={idx}
-                    className="h-12 border-2 border-aluminium-900 bg-aluminium-600"
+                    className="h-12 border-2 border-spotify-400 rounded-2xl bg-spotify-300"
                   ></div>
                 ))}
             </div>
@@ -136,8 +155,21 @@ const Home: NextPage = () => {
                 )}
               </div>
             </div>
+            
           </div>
+          <Link
+                  href={{
+                    pathname: "/results",
+                    query: { tempos:speedsToTempos().join(","), artists: artists.map((a) => a.id).join(",") },
+                  }}
+                >
+          <button className="text-2xl bg-spotify-100 text-aluminium-900 p-4 rounded-2xl font-bold">
+          Generate
+        </button>
+        </Link>
+          
         </div>
+       
         <SignOut />
         <Footer />
       </div>

@@ -44,6 +44,7 @@ export default function SpotifySearch({
 
   return (
     <motion.div
+      
       animate={{
         display: display ? "block" : "none",
         x: display ? 0 : -10,
@@ -60,8 +61,10 @@ export default function SpotifySearch({
       <div className="flex w-full flex-col items-center justify-start pl-2">
         {searchResults &&
           searchResults.map((artist: any, idx: number) => (
-            <div
-              key={idx}
+            <motion.div
+              key={artist.id}
+              initial={{x: -10}}
+              animate={{x:0}}
               className="flex h-full w-full items-center justify-start gap-2 last:pb-4"
               onMouseDown={() => handleSelect(artist)}
             >
@@ -80,7 +83,7 @@ export default function SpotifySearch({
                   {artist.genres.slice(0, 1).join(", ")}
                 </h2>
               </div>
-            </div>
+            </motion.div>
           ))}
       </div>
     </motion.div>

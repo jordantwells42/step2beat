@@ -24,7 +24,7 @@ export default function WorkoutGraph({
   height: number;
 }) {
   let margin = {
-    top: 20,
+    top: 40,
     right: 40,
     bottom: 20,
     left: 40,
@@ -52,7 +52,7 @@ export default function WorkoutGraph({
 
   return (
     <div className="relative">
-      <svg className="text-aluminium-300" viewBox={`0 0 ${width} ${height}`}>
+      <svg className="text-aluminium-300 " viewBox={`0 0 ${width} ${height}`}>
         {/* X axis */}
         {data.map((datum, idx) => (
           <g key={idx} className="">
@@ -110,19 +110,30 @@ export default function WorkoutGraph({
       </svg>
       {/* Circles */}
       <div className="absolute top-0 h-full w-full">
-        {data.map((datum, idx) => (
+        {speeds.map((speed, idx) => (
           <div
             className="absolute"
             style={{
               transform: `translate(${xScale(idx) - 6}px, ${
-                yScale(datum[1]) - 6
+                yScale(speed.speed) - 6
               }px)`,
             }}
             key={idx}
           >
-            <div
+            <motion.div
               draggable="true"
-              className="h-3 w-3 cursor-pointer rounded-full bg-aluminium-700 hover:cursor-pointer"
+              initial={{ rotateZ: 0 }}
+              animate={{ rotateY: speed.walking ? 0 : 180 }}
+              className={`h-3 w-3 cursor-pointer rounded-full ${
+                speed.walking ? "bg-aluminium-700" : "bg-spotify-700"
+              } hover:cursor-pointer`}
+              onClick={() => {
+                setSpeeds((prev) =>
+                  prev.map((s, i) =>
+                    i === idx ? { ...s, walking: !s.walking } : s
+                  )
+                );
+              }}
               onDragStart={(e) => {
                 setDragging(true);
               }}
@@ -136,10 +147,12 @@ export default function WorkoutGraph({
                     if (i === idx) {
                       return {
                         ...s,
-                        speed:
-                          Math.max(Math.round(
+                        speed: Math.max(
+                          Math.round(
                             (s.speed - e.nativeEvent.offsetY / height) * 100
-                          ) / 100, 0),
+                          ) / 100,
+                          0
+                        ),
                       };
                     }
                     return s;
@@ -156,15 +169,20 @@ export default function WorkoutGraph({
               animate={{ opacity: dragging ? 1 : 0 }}
               className="-translate-y-8 -translate-x-4 text-sm font-semibold text-aluminium-800"
             >
-              {datum[1]} mph
+              {speed.speed} mph
             </motion.h1>
           </div>
         ))}
       </div>
-      <div className="absolute top-0 right-0 flex flex-col gap-2">
+      <div className="absolute -top-16 right-0 flex flex-row-reverse gap-2">
         <button
           className="flex aspect-square w-8 items-center justify-center rounded-full bg-aluminium-800 text-white"
-          onClick={() => setSpeeds((p: any) => [...p, p.at(-1) || { speed: 3, walking: false }])}
+          onClick={() =>
+            setSpeeds((p: any) => [
+              ...p,
+              p.at(-1) || { speed: 3, walking: false },
+            ])
+          }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -200,6 +218,17 @@ export default function WorkoutGraph({
             />
           </svg>
         </button>
+      </div>
+      <div className="absolute top-0 right-0 flex flex-row items-cener justify-center gap-4">
+        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-500">Tap to change...</h1>
+        <div className="flex flex-row h-3 items-center justify-center gap-2">
+          <div className="w-3 aspect-square rounded-full bg-spotify-700"></div>
+          <h1>Running</h1>
+        </div>
+        <div className="flex flex-row h-3 items-center justify-center gap-2">
+          <div className="w-3 aspect-square rounded-full bg-aluminium-700"></div>
+          <h1>Walking</h1>
+        </div>
       </div>
     </div>
   );
