@@ -8,10 +8,10 @@ export default function Login() {
     <div className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center bg-green-50 font-main  text-white">
       <div className="flex w-full md:w-1/2 flex-col items-center justify-center rounded-2xl bg-stone-900 p-10">
         <h1 className="text-3xl text-gray-200 text-center">
-          Welcome to <i className="text-4xl text-green-200">Vibesition</i>
+          Welcome to <i className="text-4xl text-green-200">Step2Beat</i>
         </h1>
         <p className="w-5/6 my-3 text-center text-lg text-gray-300">
-          Ready to flow between different vibes?
+          Run to your favorite artists
         </p>
         <div className="my-5 w-3/4 border-2"></div>
         <button
