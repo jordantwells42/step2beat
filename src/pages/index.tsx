@@ -11,6 +11,7 @@ import SpotifySearch from "../components/spotifysearch";
 import WorkoutGraph from "../components/workoutgraph";
 import { motion } from 'framer-motion';
 import Link from "next/link";
+import speedToTempo from "../libs/speedToTempo";
 
 /*
 TODO: 
@@ -66,11 +67,7 @@ const Home: NextPage = () => {
     if (!speeds) { return [] }
     
     for (let speed of speeds) {
-      if (speed.walking) {
-        tempos.push(speed.speed * 24.33 + 45.82);
-      } else {
-        tempos.push(speed.speed * 10.62 + 87.979)
-      }
+      tempos.push(speedToTempo(speed))
       
     }
     return tempos;

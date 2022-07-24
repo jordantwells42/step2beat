@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import speedToTempo from "../libs/speedToTempo";
 
 export default function WorkoutGraph({
   speeds,
@@ -24,7 +25,7 @@ export default function WorkoutGraph({
   height: number;
 }) {
   let margin = {
-    top: 40,
+    top: 60,
     right: 40,
     bottom: 20,
     left: 40,
@@ -164,13 +165,14 @@ export default function WorkoutGraph({
                 setDragging(false);
               }}
             />
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: dragging ? 1 : 0 }}
-              className="-translate-y-8 -translate-x-4 text-sm font-semibold text-aluminium-800"
+              className="-translate-y-14 -translate-x-4 text-sm font-semibold text-aluminium-800"
             >
-              {speed.speed} mph
-            </motion.h1>
+              <h1>{speed.speed} mph</h1>
+              <h1>{speedToTempo(speed)} BPM</h1>
+            </motion.div>
           </div>
         ))}
       </div>
@@ -220,7 +222,9 @@ export default function WorkoutGraph({
         </button>
       </div>
       <div className="absolute top-0 right-0 flex flex-row items-cener justify-center gap-4">
-        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-500">Tap to change...</h1>
+        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-500">
+          Tap to change...
+        </h1>
         <div className="flex flex-row h-3 items-center justify-center gap-2">
           <div className="w-3 aspect-square rounded-full bg-spotify-700"></div>
           <h1>Running</h1>
