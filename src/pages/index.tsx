@@ -63,7 +63,7 @@ const Home: NextPage = () => {
     return (
       <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-x-hidden bg-spotify-50  font-main text-aluminium-900">
         <div className="relative flex h-full w-full flex-col items-center justify-center py-5 lg:w-3/4">
-          <h1 className="py-5 text-4xl font-bold">[Title]</h1>
+          <h1 className="py-5 text-4xl font-bold">Step 2 Beat</h1>
           <div className="relative flex h-20 w-5/6 items-center justify-center">
             <SpotifySearch display={true} setArtists={setArtists} />
           </div>
