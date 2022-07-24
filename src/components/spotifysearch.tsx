@@ -5,7 +5,6 @@ import PlusIcon from "./plusicon";
 import { motion } from "framer-motion";
 import tinycolor from "tinycolor2";
 import textColor from "../libs/textColor";
-import debounce from "lodash.debounce";
 
 export default function SpotifySearch({
   display,

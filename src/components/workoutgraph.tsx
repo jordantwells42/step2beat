@@ -1,7 +1,6 @@
 import * as d3 from "d3";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import _ from "lodash";
 
 export default function WorkoutGraph({
   speeds,
