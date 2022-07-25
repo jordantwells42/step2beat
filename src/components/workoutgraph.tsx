@@ -3,6 +3,10 @@ import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import speedToTempo from "../libs/speedToTempo";
 
+function clamp(x:number, min:number, max:number){
+  return Math.round(Math.min(Math.max(x, min), max) * 20) / 20;
+}
+
 export default function WorkoutGraph({
   speeds,
   setSpeeds,
@@ -40,7 +44,7 @@ export default function WorkoutGraph({
 
   let yScale = d3
     .scaleLinear()
-    .domain([0, Math.max(...justSpeeds) + 1])
+    .domain([0, Math.min(Math.max(...justSpeeds)+1, 15)])
     .range([height - margin.bottom, margin.top]);
 
   let line = d3
@@ -125,7 +129,7 @@ export default function WorkoutGraph({
               draggable="true"
               initial={{ rotateZ: 0 }}
               animate={{ rotateY: speed.walking ? 0 : 180 }}
-              className={`h-3 w-3 cursor-pointer rounded-full ${
+              className={`h-3 w-3 cursor-pointer rounded-full touch-none ${
                 speed.walking ? "bg-aluminium-700" : "bg-spotify-700"
               } hover:cursor-pointer`}
               onClick={() => {
@@ -135,12 +139,14 @@ export default function WorkoutGraph({
                   )
                 );
               }}
-              onDragStart={(e) => {
+              onTouchStart={(e) => {
                 setDragging(true);
               }}
-              onDrag={(e: any) => {
-                e.preventDefault();
-                if (Math.abs(e.nativeEvent.offsetY) > 50) {
+              onTouchMove={(e: any) => {
+                var bcr = e.target.getBoundingClientRect();
+                var x = e.targetTouches[0].clientX - bcr.x;
+                var y = e.targetTouches[0].clientY - bcr.y;
+                if (Math.abs(y) > 200) {
                   return;
                 }
                 setSpeeds((prev) =>
@@ -148,12 +154,32 @@ export default function WorkoutGraph({
                     if (i === idx) {
                       return {
                         ...s,
-                        speed: Math.max(
-                          Math.round(
-                            (s.speed - e.nativeEvent.offsetY / height) * 100
-                          ) / 100,
-                          0
-                        ),
+                        speed: clamp(s.speed - y/height*(Math.min(Math.max(...justSpeeds)+1, 15)), 0, 15)
+                      };
+                    }
+                    return s;
+                  })
+                );
+              }}
+              onTouchEnd={(e) => {
+                setDragging(false);
+              }}
+              onDragStart={(e) => {
+                setDragging(true);
+              }}
+              onDrag={(e: any) => {
+                console.log(e);
+                e.preventDefault()
+                var y = e.nativeEvent.offsetY;
+                if (Math.abs(y) > 200) {
+                  return;
+                }
+                setSpeeds((prev) =>
+                  prev.map((s: any, i: number) => {
+                    if (i === idx) {
+                      return {
+                        ...s,
+                        speed: clamp(s.speed - y/height*(Math.min(Math.max(...justSpeeds)+1, 15)), 0, 15)
                       };
                     }
                     return s;
@@ -168,7 +194,7 @@ export default function WorkoutGraph({
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: dragging ? 1 : 0 }}
-              className="-translate-y-14 -translate-x-4 text-sm font-semibold text-aluminium-800"
+              className="-translate-y-12 -translate-x-4 text-xs font-semibold text-aluminium-800"
             >
               <h1>{speed.speed} mph</h1>
               <h1>{speedToTempo(speed)} BPM</h1>

@@ -30,7 +30,7 @@ export default function Results() {
           .then((res) => res.json())
           .then((res) => {
             const newObj = {...res[0]}
-           newObj.tempo = tempo;
+            newObj.tempo = tempo;
             newObj.idx = i;
             setSongs(p => [...p, newObj].sort((a, b) => a.idx - b.idx));
           });

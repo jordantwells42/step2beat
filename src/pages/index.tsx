@@ -9,7 +9,7 @@ import Login from "../components/login";
 import Footer from "../components/footer";
 import SpotifySearch from "../components/spotifysearch";
 import WorkoutGraph from "../components/workoutgraph";
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from "next/link";
 import speedToTempo from "../libs/speedToTempo";
 
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
             <SpotifySearch display={true} setArtists={setArtists} />
           </div>
           <div className="flex w-full flex-col items-center justify-center p-5 md:h-[400px] md:flex-row">
-            <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-1/3">
+            <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-1/4">
               <h1 className="text-2xl font-bold">Seed Artists</h1>
               <h2 className="pb-2 text-sm italic">Choose up to 5</h2>
               {artists.map((artist, idx) => (
@@ -127,16 +127,17 @@ const Home: NextPage = () => {
                   </button>
                 </motion.div>
               ))}
+              
               {[0, 0, 0, 0, 0]
                 .splice(0, 5 - artists.length)
                 .map((none, idx) => (
                   <div
-                    key={idx}
+                    key={1/(idx+2)}
                     className="h-12 border-2 border-spotify-400 rounded-2xl bg-spotify-300"
                   ></div>
                 ))}
             </div>
-            <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-2/3 ">
+            <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-3/4 ">
               <div className="h-1/5">
               <h1 className="text-2xl font-bold">Your Workout</h1>
               <h2 className="pb-2 text-sm italic">Change it how you like</h2>
@@ -150,7 +151,9 @@ const Home: NextPage = () => {
                     height={bounds.height}
                   />
                 )}
+                
               </div>
+              
             </div>
             
           </div>
@@ -160,7 +163,7 @@ const Home: NextPage = () => {
                     query: { tempos:speedsToTempos().join(","), artists: artists.map((a) => a.id).join(",") },
                   }}
                 >
-          <button className="text-2xl bg-spotify-100 text-aluminium-900 p-4 rounded-2xl font-bold">
+          <button className="text-2xl bg-spotify-400 text-aluminium-900 p-4 rounded-2xl font-bold">
           Generate
         </button>
         </Link>
