@@ -34,7 +34,7 @@ function SignOut() {
       }
     >
       Hey, {session?.user?.name}
-      <button className="hover:text-blue-200" onClick={() => signOut()}>
+      <button className="hover:text-aluminium-400" onClick={() => signOut()}>
         Sign out
       </button>
     </div>

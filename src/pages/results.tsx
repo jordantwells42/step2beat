@@ -85,7 +85,7 @@ export default function Results() {
     bottom: 40 + 75,
     left: 0,
   };
-  const width = bounds.width > 700 ? bounds.width / 2 : bounds.width / 2;
+  const width = bounds.width > 700 ? bounds.width / 2 : bounds.width / 3;
   const height = speeds.length * 150;
   let yScale = d3
     .scaleLinear()
@@ -194,7 +194,7 @@ export default function Results() {
                 return (
                   song && (
                     <div
-                      className="absolute w-3/5 lg:w-1/5"
+                      className="absolute w-4/5 lg:w-1/3"
                       style={{
                         transform: `translate(${xScale(speed.speed) + 10}px, ${
                           yScale(idx) - 100
