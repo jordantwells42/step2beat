@@ -38,7 +38,7 @@ export default function WorkoutGraph({
   const data: [number, number][] = speeds.map((s, idx) => [idx, s.speed]);
   const [dragging, setDragging] = useState(false);
   let xScale = d3
-    .scaleTime()
+  .scaleLinear()
     .domain([0, speeds.length - 1])
     .range([margin.left, width - margin.right]);
 
@@ -119,8 +119,8 @@ export default function WorkoutGraph({
           <div
             className="absolute"
             style={{
-              transform: `translate(${xScale(idx) - 6}px, ${
-                yScale(speed.speed) - 6
+              transform: `translate(${xScale(idx) - 12}px, ${
+                yScale(speed.speed) - 12
               }px)`,
             }}
             key={idx}
@@ -129,7 +129,7 @@ export default function WorkoutGraph({
               draggable="true"
               initial={{ rotateZ: 0 }}
               animate={{ rotateY: speed.walking ? 0 : 180 }}
-              className={`h-3 w-3 cursor-pointer rounded-full touch-none ${
+              className={`h-6 w-6 cursor-pointer rounded-full touch-none ${
                 speed.walking ? "bg-aluminium-700" : "bg-spotify-700"
               } hover:cursor-pointer`}
               onClick={() => {
@@ -194,7 +194,7 @@ export default function WorkoutGraph({
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: dragging ? 1 : 0 }}
-              className="-translate-y-12 -translate-x-4 text-xs font-semibold text-aluminium-800"
+              className="-translate-y-16 -translate-x-4 text-xs font-semibold text-aluminium-800"
             >
               <h1>{speed.speed} mph</h1>
               <h1>{speedToTempo(speed)} BPM</h1>

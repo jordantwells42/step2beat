@@ -62,16 +62,7 @@ const Home: NextPage = () => {
     setArtists((p) => p.filter((a) => a.id !== id));
   }
 
-  function speedsToTempos(){
-    let tempos = [];
-    if (!speeds) { return [] }
-    
-    for (let speed of speeds) {
-      tempos.push(speedToTempo(speed))
-      
-    }
-    return tempos;
-  }
+
 
   if (session) {
     return (
@@ -160,10 +151,10 @@ const Home: NextPage = () => {
           <Link
                   href={{
                     pathname: "/results",
-                    query: { tempos:speedsToTempos().join(","), artists: artists.map((a) => a.id).join(",") },
+                    query: { speedsStr:JSON.stringify(speeds), artists: artists.map((a) => a.id).join(",") },
                   }}
                 >
-          <button className="text-2xl bg-spotify-400 text-aluminium-900 p-4 rounded-2xl font-bold">
+          <button className="text-3xl bg-spotify-200 text-aluminium-900 p-4 rounded-2xl font-bold">
           Generate
         </button>
         </Link>
