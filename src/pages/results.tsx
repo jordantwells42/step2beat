@@ -110,7 +110,7 @@ export default function Results() {
         ref={ref}
         className="relative bg-green-100 text-red-600 min-h-screen w-full overflow-x-hidden"
       >
-        <div className="lg:absolute lg:top-20 lg:right-20 w-96 z-20">
+        <div className="w-full lg:absolute lg:top-20 lg:right-20 lg:w-96 z-20">
           <h1 className="text-4xl p-10 bg-spotify-100 lg:rounded-2xl text-white text-left font-semibold">
             Your Step 2 Beat
           </h1>
@@ -178,7 +178,7 @@ export default function Results() {
                     " " +
                     -1000
                   }
-                  fill="#36cc77"
+                  fill="#83e4a8"
                   stroke="none"
                   strokeWidth="10"
                 />
@@ -194,7 +194,7 @@ export default function Results() {
                 return (
                   song && (
                     <div
-                      className="absolute w-3/5 md:w-1/5"
+                      className="absolute w-3/5 lg:w-1/5"
                       style={{
                         transform: `translate(${xScale(speed.speed) + 10}px, ${
                           yScale(idx) - 100
