@@ -37,6 +37,7 @@ export default function SpotifySearch({
         name: artist.name,
         id: artist.id,
         image: artist.images[0] ? artist.images[0].url : null,
+        href: artist.external_urls.spotify,
         genre: artist.genres[0],
       },
     ]);
@@ -50,12 +51,12 @@ export default function SpotifySearch({
         x: display ? 0 : -10,
       }}
       onBlur={() => [setSearchQuery(""), setSearchResults(null)]}
-      className="bg-aluminium-900 text-aluminium-100 absolute top-0 flex w-full md:w-3/4 flex-col items-center justify-center rounded-2xl p-1"
+      className="bg-aluminium-900 text-white absolute top-0 flex w-full md:w-3/4 flex-col items-center justify-center rounded-2xl py-2 px-4"
     >
       <input
         value={searchQuery}
         placeholder={"Doja Cat"}
-        className="w-5/6 rounded-2xl p-2 m-2 items-center justify-center flex placeholder-aluminium-300 text-aluminium-900 "
+        className="my-2 w-full rounded-2xl p-2  text-2xl  md:px-4 placeholder-aluminium-300 text-aluminium-900 "
         onChange={handleChange}
       />
       <div className="flex w-full flex-col items-center justify-start pl-2">

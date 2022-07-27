@@ -111,10 +111,10 @@ export default function Results() {
         className="relative bg-green-100 text-red-600 min-h-screen w-full overflow-x-hidden"
       >
         <div className="w-full lg:absolute lg:top-20 lg:right-20 lg:w-96 z-20">
-          <h1 className="text-4xl p-10 bg-spotify-100 lg:rounded-2xl text-white text-left font-semibold">
+          <h1 className="text-4xl p-10 bg-spotify-200 lg:rounded-t-2xl text-white text-left font-semibold">
             Your Step 2 Beat
           </h1>
-          <div className="flex w-full flex-col lg:rounded-2xl bg-stone-800 p-3 text-xl ">
+          <div className="flex w-full flex-col lg:rounded-b-2xl bg-stone-800 p-3 text-xl ">
             <div className="flex w-full flex-row items-center justify-between">
               <input
                 value={playlistName}
@@ -135,7 +135,7 @@ export default function Results() {
               </button>
             </div>
             {playlistUrl && (
-              <div className="my-2 flex w-full truncate whitespace-nowrap  text-white hover:text-green-200">
+              <div className="mt-2 flex w-full truncate whitespace-nowrap  text-white hover:text-green-200">
                 <img
                   className="m-1 aspect-square w-5 origin-center object-contain"
                   alt="Spotify Logo"

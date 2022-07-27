@@ -248,7 +248,7 @@ export default function WorkoutGraph({
         </button>
       </div>
       <div className="absolute top-0 right-0 flex flex-row items-cener justify-center gap-4">
-        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-500">
+        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-900 font-light">
           Tap to change...
         </h1>
         <div className="flex flex-row h-3 items-center justify-center gap-2">

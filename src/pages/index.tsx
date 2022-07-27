@@ -12,6 +12,7 @@ import WorkoutGraph from "../components/workoutgraph";
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from "next/link";
 import speedToTempo from "../libs/speedToTempo";
+import SongImage from '../components/songimage';
 
 /*
 TODO: 
@@ -29,7 +30,7 @@ function SignOut() {
   return (
     <div
       className={
-        "absolute top-0 right-0 flex flex-col rounded-2xl text-right justify-center items-end p-4 px-10 font-main font-medium text-aluminium-900 "
+        "lg:absolute lg:top-0 lg:right-0 flex flex-col rounded-2xl  justify-center items-center lg:items-end p-4 px-10 font-main font-medium text-aluminium-900 pb-20"
       }
     >
       Hey, {session?.user?.name}
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
   if (session) {
     return (
       <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-x-hidden bg-spotify-50  font-main text-aluminium-900">
-        <div className="relative flex h-full w-full flex-col items-center justify-center py-5 lg:w-3/4">
+        <div className="relative flex h-full w-full flex-col items-center justify-center py-5 lg:w-3/4 pb-10">
           <h1 className="py-5 text-4xl font-bold">Step 2 Beat</h1>
           <div className="relative z-20 flex h-20 w-5/6 items-center justify-center">
             <SpotifySearch display={true} setArtists={setArtists} />
@@ -84,11 +85,9 @@ const Home: NextPage = () => {
                   className="flex w-full items-center justify-start gap-2"
                 >
                   {artist.image ? (
-                    <img
-                      className="aspect-square w-12"
-                      src={artist.image}
-                      alt={artist.name}
-                    />
+                    <div className="h-12 mx-1 p-0">
+                    <SongImage hideText songName={artist.name} imgUrl={artist.image} spotifyUrl={artist.href}/>
+                    </div>
                   ) : (
                     <div className="aspect-square w-12"></div>
                   )}
@@ -124,7 +123,7 @@ const Home: NextPage = () => {
                 .map((none, idx) => (
                   <div
                     key={1/(idx+2)}
-                    className="h-12 border-2 border-spotify-400 rounded-2xl bg-spotify-300"
+                    className="h-12 border-2 border-spotify-100 rounded-2xl bg-spotify-200"
                   ></div>
                 ))}
             </div>
@@ -154,7 +153,7 @@ const Home: NextPage = () => {
                     query: { speedsStr:JSON.stringify(speeds), artists: artists.map((a) => a.id).join(",") },
                   }}
                 >
-          <button className="text-3xl bg-spotify-200 text-aluminium-900 p-4 rounded-2xl font-bold">
+          <button className="text-3xl bg-spotify-200 text-white p-4 rounded-2xl font-bold">
           Generate
         </button>
         </Link>
