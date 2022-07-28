@@ -112,7 +112,7 @@ export default function Results() {
       >
         <div className="w-full lg:absolute lg:top-20 lg:right-20 lg:w-96 z-20">
           <h1 className="text-4xl p-10 bg-spotify-200 lg:rounded-t-2xl text-white text-left font-semibold">
-            Your Step 2 Beat
+            your step2beat
           </h1>
           <div className="flex w-full flex-col lg:rounded-b-2xl bg-stone-800 p-3 text-xl ">
             <div className="flex w-full flex-row items-center justify-between">
@@ -120,7 +120,7 @@ export default function Results() {
                 value={playlistName}
                 onChange={(evt) => setPlaylistName(evt.target.value)}
                 className="h-1/2  w-3/4 rounded-xl p-2 text-stone-900"
-                placeholder="My Step 2 Beat"
+                placeholder="my step2beat"
               ></input>
               <button
                 style={{
@@ -131,7 +131,7 @@ export default function Results() {
                 className="mx-3 hover:border-b-2 h-1/2 w-1/2 rounded-xl p-2 text-white hover:cursor-pointer"
                 onClick={handleCreatePlaylist}
               >
-                Save Playlist
+                save playlist
               </button>
             </div>
             {playlistUrl && (
@@ -141,7 +141,7 @@ export default function Results() {
                   alt="Spotify Logo"
                   src="/spotify.png"
                 />
-                <a href={playlistUrl}>View Playlist</a>
+                <a href={playlistUrl}>view playlist</a>
               </div>
             )}
           </div>

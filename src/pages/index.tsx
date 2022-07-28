@@ -69,14 +69,14 @@ const Home: NextPage = () => {
     return (
       <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-x-hidden bg-spotify-50  font-main text-aluminium-900">
         <div className="relative flex h-full w-full flex-col items-center justify-center py-5 lg:w-3/4 pb-10">
-          <h1 className="py-5 text-4xl font-bold">Step 2 Beat</h1>
+          <h1 className="py-5 text-4xl font-bold">step2beat</h1>
           <div className="relative z-20 flex h-20 w-5/6 items-center justify-center">
             <SpotifySearch display={true} setArtists={setArtists} />
           </div>
           <div className="flex w-full flex-col items-center justify-center p-5 md:h-[400px] md:flex-row">
             <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-1/4">
-              <h1 className="text-2xl font-bold">Seed Artists</h1>
-              <h2 className="pb-2 text-sm italic">Choose up to 5</h2>
+              <h1 className="text-2xl font-bold">seed artists</h1>
+              <h2 className="pb-2 text-sm italic">choose up to 5</h2>
               {artists.map((artist, idx) => (
                 <motion.div
                   key={idx}
@@ -129,8 +129,8 @@ const Home: NextPage = () => {
             </div>
             <div className="m-2 h-[400px] w-full rounded-2xl bg-spotify-100 p-4 md:h-full md:w-3/4 ">
               <div className="h-1/5">
-              <h1 className="text-2xl font-bold">Your Workout</h1>
-              <h2 className="pb-2 text-sm italic">Change it how you like</h2>
+              <h1 className="text-2xl font-bold">your workout</h1>
+              <h2 className="pb-2 text-sm italic">change it how you like</h2>
               </div>
               <div className="h-4/5" ref={ref}>
                 {bounds.width > 0 && (
@@ -154,7 +154,7 @@ const Home: NextPage = () => {
                   }}
                 >
           <button className="text-3xl bg-spotify-200 text-white p-4 rounded-2xl font-bold">
-          Generate
+          generate
         </button>
         </Link>
           

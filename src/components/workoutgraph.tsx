@@ -267,15 +267,15 @@ export default function WorkoutGraph({
       </div>
       <div className="absolute top-0 right-0 flex flex-row items-cener justify-center gap-4">
         <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-900 font-light">
-          Tap to change...
+          tap to change...
         </h1>
         <div className="flex flex-row h-3 items-center justify-center gap-2">
           <div className="w-3 aspect-square rounded-full bg-spotify-700"></div>
-          <h1>Running</h1>
+          <h1>running</h1>
         </div>
         <div className="flex flex-row h-3 items-center justify-center gap-2">
           <div className="w-3 aspect-square rounded-full bg-aluminium-700"></div>
-          <h1>Walking</h1>
+          <h1>walking</h1>
         </div>
       </div>
     </div>

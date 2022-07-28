@@ -55,7 +55,7 @@ export default function SpotifySearch({
     >
       <input
         value={searchQuery}
-        placeholder={"Doja Cat"}
+        placeholder={"doja cat"}
         className="my-2 w-full rounded-2xl p-2  text-2xl  md:px-4 placeholder-aluminium-300 text-aluminium-900 "
         onChange={handleChange}
       />
