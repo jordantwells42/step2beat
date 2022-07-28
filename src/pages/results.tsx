@@ -67,7 +67,7 @@ export default function Results() {
           .map((s) => s.id)
           .map((s) => "spotify:track:" + s)
           .join(",") +
-        `&description=Step2Beat`
+        `&description=step2beat: ${speeds.map(s => s.speed).join(", ")} mph`
     )
       .then((res) => res.json())
       .then((data) => {
