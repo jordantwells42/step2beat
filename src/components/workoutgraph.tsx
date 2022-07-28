@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import speedToTempo from "../libs/speedToTempo";
 
-function clamp(x:number, min:number, max:number){
+function clamp(x: number, min: number, max: number) {
   return Math.round(Math.min(Math.max(x, min), max) * 20) / 20;
 }
 
@@ -35,16 +35,17 @@ export default function WorkoutGraph({
     left: 40,
   };
   const justSpeeds = speeds.map((s) => s.speed);
+  const prevY = useRef(0);
   const data: [number, number][] = speeds.map((s, idx) => [idx, s.speed]);
   const [dragging, setDragging] = useState(false);
   let xScale = d3
-  .scaleLinear()
+    .scaleLinear()
     .domain([0, speeds.length - 1])
     .range([margin.left, width - margin.right]);
 
   let yScale = d3
     .scaleLinear()
-    .domain([0, Math.min(Math.max(...justSpeeds)+1, 15)])
+    .domain([0, Math.min(Math.max(...justSpeeds) + 1, 15)])
     .range([height - margin.bottom, margin.top]);
 
   let line = d3
@@ -127,8 +128,8 @@ export default function WorkoutGraph({
           >
             <motion.div
               draggable="true"
-              initial={{ rotateZ: 0 }}
-              animate={{ rotateY: speed.walking ? 0 : 180 }}
+              initial={{ rotateZ: 0, y: idx % 2 == 0 ? -20 : 20 }}
+              animate={{ rotateY: speed.walking ? 0 : 180, y: 0 }}
               className={`h-6 w-6 cursor-pointer rounded-full touch-none ${
                 speed.walking ? "bg-aluminium-700" : "bg-spotify-700"
               } hover:cursor-pointer`}
@@ -146,7 +147,7 @@ export default function WorkoutGraph({
                 var bcr = e.target.getBoundingClientRect();
                 var x = e.targetTouches[0].clientX - bcr.x;
                 var y = e.targetTouches[0].clientY - bcr.y;
-                if (Math.abs(y) > 200) {
+                if (Math.abs(y) > 100) {
                   return;
                 }
                 setSpeeds((prev) =>
@@ -154,7 +155,13 @@ export default function WorkoutGraph({
                     if (i === idx) {
                       return {
                         ...s,
-                        speed: clamp(s.speed - y/height*(Math.min(Math.max(...justSpeeds)+1, 15)), 0, 15)
+                        speed: clamp(
+                          s.speed -
+                            (y / height) *
+                              Math.min(Math.max(...justSpeeds) + 1, 15),
+                          0,
+                          15
+                        ),
                       };
                     }
                     return s;
@@ -169,31 +176,42 @@ export default function WorkoutGraph({
               }}
               onDrag={(e: any) => {
                 console.log(e);
-                e.preventDefault()
-                var y = e.nativeEvent.offsetY;
-                if (Math.abs(y) > 200) {
+
+                var bcr = e.target.getBoundingClientRect();
+                var x = e.clientX - bcr.x;
+                var y = e.clientY - bcr.y;
+                if (Math.abs(y) > 200 || Math.abs(y - prevY.current) > 10) {
+                  prevY.current = y;
                   return;
+                } else {
+                  setSpeeds((prev) =>
+                    prev.map((s: any, i: number) => {
+                      if (i === idx) {
+                        return {
+                          ...s,
+                          speed: clamp(
+                            s.speed -
+                              (y / height) *
+                                Math.min(Math.max(...justSpeeds) + 1, 15),
+                            0,
+                            15
+                          ),
+                        };
+                      }
+                      return s;
+                    })
+                  );
+                  prevY.current = y;
                 }
-                setSpeeds((prev) =>
-                  prev.map((s: any, i: number) => {
-                    if (i === idx) {
-                      return {
-                        ...s,
-                        speed: clamp(s.speed - y/height*(Math.min(Math.max(...justSpeeds)+1, 15)), 0, 15)
-                      };
-                    }
-                    return s;
-                  })
-                );
               }}
               onDragEnd={(e) => {
-                e.preventDefault();
                 setDragging(false);
               }}
             />
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: dragging ? 1 : 0 }}
+              transition={{ duration: 0.5, type: "tween" }}
               className="-translate-y-16 -translate-x-4 text-xs font-semibold text-aluminium-800"
             >
               <h1>{speed.speed} mph</h1>

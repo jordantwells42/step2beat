@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Run</title>
+        <title>Step 2 Beat</title>
         <link
           rel="icon"
           className="h-full w-full"
