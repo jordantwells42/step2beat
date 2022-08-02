@@ -271,7 +271,7 @@ export default function WorkoutGraph({
           </svg>
         </button>
       </div>
-      <div className="absolute top-0 right-0 flex flex-row items-center justify-center gap-4">
+      <div className="absolute top-0 right-0 flex flex-row items-center justify-center gap-4 text-xs md:text-base">
         <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-800 font-light">
           Tap to change...
         </h1>

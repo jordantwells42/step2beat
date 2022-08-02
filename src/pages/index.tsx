@@ -137,7 +137,7 @@ const Home: NextPage = () => {
                 ))}
             </div>
             <div className="m-2 h-[400px] w-full rounded-2xl bg-ablue-100 p-4 md:h-full md:w-3/4 ">
-              <div className="h-1/5 flex flex-row gap-10 items-center justify-start">
+              <div className="h-1/5 flex flex-row gap-2 md:gap-10 items-center justify-start ">
                 <div>
                 <h1 className="text-2xl font-bold">Your Workout</h1>
                 <h2 className="pb-2 text-sm italic">Change it how you like</h2>
