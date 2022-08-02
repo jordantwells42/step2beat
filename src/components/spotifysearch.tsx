@@ -40,7 +40,7 @@ export default function SpotifySearch({
         href: artist.external_urls.spotify,
         genre: artist.genres[0],
       },
-    ]);
+    ].slice(0, 5));
   }
 
   return (
