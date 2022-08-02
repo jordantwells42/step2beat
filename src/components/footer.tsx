@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 export default function Footer() {
   return (
-    <div className="absolute bottom-0 flex h-10 w-full items-center justify-between bg-aluminium-900 p-5 text-aluminium-50 text-xs md:text-base">
+    <div className="absolute bottom-0 flex h-10 w-full items-center justify-between bg-aluminium-800 p-5 text-aluminium-50 text-xs md:text-base">
       <div className="flex w-full gap-4">
         <h1>
           Made by{" "}

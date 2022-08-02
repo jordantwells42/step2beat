@@ -18,12 +18,16 @@ import useMeasure from "react-use-measure";
 export default function Results() {
   const router = useRouter();
   const [songs, setSongs] = useState<any[]>([]);
-  let { speedsStr, artists } = router.query;
+  let { speedsStr, artists, kmphSetting } = router.query;
+  const kmph = kmphSetting === "true";
   const speeds = (speedsStr ? JSON.parse(speedsStr as string) : []) as {
     speed: number;
     walking: boolean;
   }[];
   const tempos = speedsToTempos(speeds);
+
+  
+  const c = kmph ? 1.60934 : 1
 
   function speedsToTempos(speeds: { speed: number; walking: boolean }[]) {
     let tempos = [];
@@ -62,12 +66,12 @@ export default function Results() {
 
   function handleCreatePlaylist() {
     fetch(
-      `/api/create-playlist?name=${playlistName}&ids=` +
+      `/api/create-playlist?name=${playlistName || "my step2beat"}&ids=` +
         songs
           .map((s) => s.id)
           .map((s) => "spotify:track:" + s)
           .join(",") +
-        `&description=step2beat: ${speeds.map(s => s.speed).join(", ")} mph`
+        `&description=step2beat: ${speeds.map(s => Math.round(s.speed*c*100)/100).join(", ")} ${kmph ? "km/h" : "mph"}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -78,7 +82,9 @@ export default function Results() {
   const justSpeeds = speeds.map((s) => s.speed);
   let [ref, bounds] = useMeasure();
   const data: [number, number][] = speeds.map((s, idx) => [idx, s.speed]);
-  const [dragging, setDragging] = useState(false);
+  const maxSpeed = 15 * c
+
+
   let margin = {
     top: 150,
     right: 40,
@@ -94,7 +100,7 @@ export default function Results() {
 
   let xScale = d3
     .scaleLinear()
-    .domain([0, Math.min(Math.max(...justSpeeds) + 1, 15)])
+    .domain([0, Math.min(Math.max(...justSpeeds) + 1, maxSpeed)])
     .range([margin.left, width - margin.right]);
 
   let line = d3
@@ -108,40 +114,35 @@ export default function Results() {
     return (
       <div
         ref={ref}
-        className="relative bg-green-100 text-red-600 min-h-screen w-full overflow-x-hidden"
+        className="relative bg-ablue-50 text-red-600 min-h-screen w-full overflow-x-hidden"
       >
         <div className="w-full lg:absolute lg:top-20 lg:right-20 lg:w-96 z-20">
-          <h1 className="text-4xl p-10 bg-spotify-200 lg:rounded-t-2xl text-white text-left font-semibold">
-            your step2beat
+          <h1 className="text-4xl p-10 bg-ablue-300 lg:rounded-t-2xl text-white text-left font-semibold">
+            Your Step2Beat
           </h1>
-          <div className="flex w-full flex-col lg:rounded-b-2xl bg-stone-800 p-3 text-xl ">
+          <div className="flex w-full flex-col lg:rounded-b-2xl bg-aluminium-800 p-3 text-xl ">
             <div className="flex w-full flex-row items-center justify-between">
               <input
                 value={playlistName}
                 onChange={(evt) => setPlaylistName(evt.target.value)}
-                className="h-1/2  w-3/4 rounded-xl p-2 text-stone-900"
+                className="h-1/2  w-3/4 rounded-xl p-2 text-aluminium-900 bg-ablue-50"
                 placeholder="my step2beat"
               ></input>
               <button
-                style={{
-                  backgroundColor: tinycolor("#1ed760")
-                    .desaturate(40)
-                    .toHexString(),
-                }}
-                className="mx-3 hover:border-b-2 h-1/2 w-1/2 rounded-xl p-2 text-white hover:cursor-pointer"
+                className="bg-ablue-100 mx-3 hover:border-b-2 h-1/2 w-1/2 rounded-xl p-2 text-aluminium-800 font-bold hover:cursor-pointer"
                 onClick={handleCreatePlaylist}
               >
-                save playlist
+                Save Playlist
               </button>
             </div>
             {playlistUrl && (
-              <div className="mt-2 flex w-full truncate whitespace-nowrap  text-white hover:text-green-200">
+              <div className="mt-2 flex w-full truncate whitespace-nowrap  text-white hover:text-ablue-200">
                 <img
                   className="m-1 aspect-square w-5 origin-center object-contain"
                   alt="Spotify Logo"
                   src="/spotify.png"
                 />
-                <a href={playlistUrl}>view playlist</a>
+                <a href={playlistUrl}>View Playlist</a>
               </div>
             )}
           </div>
@@ -178,7 +179,7 @@ export default function Results() {
                     " " +
                     -1000
                   }
-                  fill="#83e4a8"
+                  fill="#63d6ff"
                   stroke="none"
                   strokeWidth="10"
                 />
@@ -204,8 +205,7 @@ export default function Results() {
                     >
                       <SongCard
                         song={song}
-                        color={tinycolor("#b2ecc2")}
-                        tempo={String(speed.speed) + " mph"}
+                        tempo={String(Math.round(speed.speed*c*100)/100) + " " +  (kmph ? "km/h" : "mph")}
                       />
                     </div>
                   )
@@ -213,13 +213,7 @@ export default function Results() {
               })}
           </div>
         </div>
-        {/*songs &&
-          songs.map((song, idx) => (
-            <div key={idx} className="">
-              <h1>{song.tempo}</h1>
-              <SongCard song={song} color={tinycolor("#222")} />
-            </div>
-          ))*/}
+
         <Footer />
       </div>
     );

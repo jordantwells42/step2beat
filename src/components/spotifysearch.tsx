@@ -51,12 +51,12 @@ export default function SpotifySearch({
         x: display ? 0 : -10,
       }}
       onBlur={() => [setSearchQuery(""), setSearchResults(null)]}
-      className="bg-aluminium-900 text-white absolute top-0 flex w-full md:w-3/4 flex-col items-center justify-center rounded-2xl py-2 px-4"
+      className="bg-aluminium-800 text-white absolute top-0 flex w-full md:w-3/4 flex-col items-center justify-center rounded-2xl py-2 px-4"
     >
       <input
         value={searchQuery}
         placeholder={"doja cat"}
-        className="my-2 w-full rounded-2xl p-2  text-2xl  md:px-4 placeholder-aluminium-300 text-aluminium-900 "
+        className="my-2 w-full rounded-2xl p-2 bg-aluminium-50 text-2xl  md:px-4 placeholder-aluminium-300 text-aluminium-800 "
         onChange={handleChange}
       />
       <div className="flex w-full flex-col items-center justify-start pl-2">

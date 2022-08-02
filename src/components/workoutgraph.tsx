@@ -12,6 +12,7 @@ export default function WorkoutGraph({
   setSpeeds,
   width,
   height,
+  kmph,
 }: {
   speeds: {
     speed: number;
@@ -27,6 +28,7 @@ export default function WorkoutGraph({
   >;
   width: number;
   height: number;
+  kmph: boolean;
 }) {
   let margin = {
     top: 60,
@@ -34,9 +36,11 @@ export default function WorkoutGraph({
     bottom: 20,
     left: 40,
   };
-  const justSpeeds = speeds.map((s) => s.speed);
+  const c = kmph ? 1.60934 : 1;
+  const maxSpeed = 15;
+  const justSpeeds = speeds.map((s) => s.speed*c);
   const prevY = useRef(0);
-  const data: [number, number][] = speeds.map((s, idx) => [idx, s.speed]);
+  const data: [number, number][] = speeds.map((s, idx) => [idx, s.speed*c]);
   const [dragging, setDragging] = useState(false);
   let xScale = d3
     .scaleLinear()
@@ -45,7 +49,7 @@ export default function WorkoutGraph({
 
   let yScale = d3
     .scaleLinear()
-    .domain([0, Math.min(Math.max(...justSpeeds) + 1, 15)])
+    .domain([0, Math.min(Math.max(...justSpeeds) + 1, maxSpeed*c)])
     .range([height - margin.bottom, margin.top]);
 
   let line = d3
@@ -72,14 +76,15 @@ export default function WorkoutGraph({
               )*/}
             <text
               x={xScale(idx)}
-              y={height - 5}
+              y={height - 10}
               textAnchor="middle"
               fill="currentColor"
-              className="text-[10px] text-aluminium-900"
+              className="text-[10px] text-aluminium-800"
             >
-              {idx}
+              {idx + 1}
             </text>
           </g>
+          
         ))}
 
         {/* Y axis */}
@@ -93,7 +98,7 @@ export default function WorkoutGraph({
             />
             <text
               alignmentBaseline="middle"
-              className="text-[10px] text-aluminium-900"
+              className="text-[10px] text-aluminium-800"
               fill="currentColor"
             >
               {max}
@@ -121,7 +126,7 @@ export default function WorkoutGraph({
             className="absolute"
             style={{
               transform: `translate(${xScale(idx) - 12}px, ${
-                yScale(speed.speed) - 12
+                yScale(speed.speed*c) - 12
               }px)`,
             }}
             key={idx}
@@ -131,7 +136,7 @@ export default function WorkoutGraph({
               initial={{ rotateZ: 0, y: idx % 2 == 0 ? -20 : 20 }}
               animate={{ rotateY: speed.walking ? 0 : 180, y: 0 }}
               className={`h-6 w-6 cursor-pointer rounded-full touch-none ${
-                speed.walking ? "bg-aluminium-700" : "bg-spotify-700"
+                speed.walking ? "bg-aluminium-800" : "bg-ablue-500"
               } hover:cursor-pointer`}
               onClick={() => {
                 setSpeeds((prev) =>
@@ -158,9 +163,9 @@ export default function WorkoutGraph({
                         speed: clamp(
                           s.speed -
                             (y / height) *
-                              Math.min(Math.max(...justSpeeds) + 1, 15),
+                              Math.min(Math.max(...justSpeeds) + 1, maxSpeed),
                           0,
-                          15
+                          maxSpeed
                         ),
                       };
                     }
@@ -180,6 +185,7 @@ export default function WorkoutGraph({
                 var bcr = e.target.getBoundingClientRect();
                 var x = e.clientX - bcr.x;
                 var y = e.clientY - bcr.y;
+                
                 if (Math.abs(y) > 200 || Math.abs(y - prevY.current) > 10) {
                   prevY.current = y;
                   return;
@@ -192,9 +198,9 @@ export default function WorkoutGraph({
                           speed: clamp(
                             s.speed -
                               (y / height) *
-                                Math.min(Math.max(...justSpeeds) + 1, 15),
+                                Math.min(Math.max(...justSpeeds) + 1,maxSpeed),
                             0,
-                            15
+                            maxSpeed
                           ),
                         };
                       }
@@ -214,7 +220,7 @@ export default function WorkoutGraph({
               transition={{ duration: 0.5, type: "tween" }}
               className="-translate-y-16 -translate-x-4 text-xs font-semibold text-aluminium-800"
             >
-              <h1>{speed.speed} mph</h1>
+              <h1>{Math.round(speed.speed*c*100)/100} {kmph? "km/h" : "mph"}</h1>
               <h1>{speedToTempo(speed)} BPM</h1>
             </motion.div>
           </div>
@@ -265,17 +271,17 @@ export default function WorkoutGraph({
           </svg>
         </button>
       </div>
-      <div className="absolute top-0 right-0 flex flex-row items-cener justify-center gap-4">
-        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-900 font-light">
-          tap to change...
+      <div className="absolute top-0 right-0 flex flex-row items-center justify-center gap-4">
+        <h1 className="flex flex-row h-3 items-center justify-center gap-2 text-aluminium-800 font-light">
+          Tap to change...
         </h1>
         <div className="flex flex-row h-3 items-center justify-center gap-2">
-          <div className="w-3 aspect-square rounded-full bg-spotify-700"></div>
-          <h1>running</h1>
+          <div className="w-3 aspect-square rounded-full bg-ablue-500"></div>
+          <h1>Running</h1>
         </div>
         <div className="flex flex-row h-3 items-center justify-center gap-2">
-          <div className="w-3 aspect-square rounded-full bg-aluminium-700"></div>
-          <h1>walking</h1>
+          <div className="w-3 aspect-square rounded-full bg-aluminium-800"></div>
+          <h1>Walking</h1>
         </div>
       </div>
     </div>

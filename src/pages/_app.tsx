@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>step2beat</title>
+        <title>Step2Beat</title>
         <link
           rel="icon"
           className="h-full w-full"
@@ -25,17 +25,17 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         ></meta>
         <meta
           property="og:description"
-          content="Generate a playlist that blends between two songs' vibes"
+          content="Generate the perfect playlist for your workout"
         />
         <meta
           name="description"
-          content="Generate a playlist that blends between two songs' vibes"
+          content="Generate the perfect playlist for your workout"
         />
-        <meta property="og:title" content="Vibesition" key="title" />
+        <meta property="og:title" content="Step2Beat" key="title" />
         <meta property="og:image" content={"/preview.png"} />
         <meta
           property="og:url"
-          content={"https://vibesition.jordantwells.com"}
+          content={"https://step2beat.jordantwells.com"}
         />
       </Head>
       <Component {...pageProps} />

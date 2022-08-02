@@ -5,10 +5,10 @@ import tinycolor from 'tinycolor2';
 
 export default function Login() {
   return (
-    <div className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center bg-green-50 font-main  text-white">
-      <div className="flex w-full md:w-1/2 flex-col items-center justify-center rounded-2xl bg-stone-900 p-10">
+    <div className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center bg-ablue-50 font-main  text-white">
+      <div className="flex w-full md:w-1/2 flex-col items-center justify-center rounded-2xl bg-aluminium-900 p-10">
         <h1 className="text-3xl text-gray-200 text-center">
-          Welcome to <i className="text-4xl text-green-200">Step2Beat</i>
+          Welcome to <i className="text-4xl text-ablue-200">Step2Beat</i>
         </h1>
         <p className="w-5/6 my-3 text-center text-lg text-gray-300">
           Run to your favorite artists

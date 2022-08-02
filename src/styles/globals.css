@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-toggle--checked .react-toggle-track {
+    background-color: #46bff3 !important;
+  }
+

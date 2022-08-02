@@ -7,11 +7,9 @@ import { useRef, useState } from "react";
 import SongImage from "./songimage";
 export default function SongCard({
   song,
-  color,
   tempo,
 }: {
   song: any;
-  color: tinycolor.Instance;
   tempo: string
 }) {
   const playerRef = useRef<HTMLAudioElement>(null);
@@ -26,6 +24,7 @@ export default function SongCard({
       setPlaying(!playing);
     }
   };
+
 
   const variants: any = {
     playing: {
@@ -46,9 +45,9 @@ export default function SongCard({
   return (
     song.album && (
       <motion.div
-        initial={{ x: -20, backgroundColor: "#222" }}
-        animate={{ x: 0, backgroundColor: color.toHexString() }}
-        className={`flex h-24 flex-row w-full items-center rounded-2xl p-2 hover:bg-green-700 text-aluminium-900`}
+        initial={{ x: -20}}
+        animate={{ x: 0 }}
+        className={`flex h-24 flex-row w-full items-center rounded-2xl p-2 bg-ablue-200 hover:bg-ablue-300 text-aluminium-800`}
         key={song.id}
         onClick={song.preview_url && handleClick}
       >
@@ -117,7 +116,7 @@ export default function SongCard({
             <p className="w-full truncate whitespace-nowrap text-left">
               {song.artists[0].name}
             </p>
-            <p className="w-full truncate whitespace-nowrap text-left">
+            <p className="w-full truncate whitespace-nowrap text-left italic font-semibold">
               {tempo}
             </p>
           </a>
