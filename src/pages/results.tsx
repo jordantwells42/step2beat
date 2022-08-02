@@ -117,7 +117,7 @@ export default function Results() {
         className="relative bg-ablue-50 text-red-600 min-h-screen w-full overflow-x-hidden"
       >
         <div className="w-full lg:absolute lg:top-20 lg:right-20 lg:w-96 z-20">
-          <h1 className="text-4xl p-10 bg-ablue-300 lg:rounded-t-2xl text-white text-left font-semibold">
+          <h1 className="text-4xl p-10 bg-ablue-500 lg:rounded-t-2xl text-white text-center font-semibold">
             Your Step2Beat
           </h1>
           <div className="flex w-full flex-col lg:rounded-b-2xl bg-aluminium-800 p-3 text-xl ">
@@ -129,7 +129,7 @@ export default function Results() {
                 placeholder="my step2beat"
               ></input>
               <button
-                className="bg-ablue-100 mx-3 hover:border-b-2 h-1/2 w-1/2 rounded-xl p-2 text-aluminium-800 font-bold hover:cursor-pointer"
+                className="bg-ablue-100 mx-3 hover:border-b-2 border-aluminium-800 h-1/2 w-1/2 rounded-xl p-2 text-aluminium-800 font-semibold hover:cursor-pointer"
                 onClick={handleCreatePlaylist}
               >
                 Save Playlist
@@ -155,17 +155,8 @@ export default function Results() {
             {/* Line */}
             {d && (
               <>
-                <motion.path
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, type: "spring" }}
-                  d={d}
-                  fill="none"
-                  stroke="none"
-                  strokeWidth="10"
-                />
-                <motion.path
-                  initial={{ pathLength: 0 }}
+                              <motion.path
+                  initial={{ pathLength: 1 }}
                   animate={{ pathLength: 1 }}
                   transition={{ duration: 1.5, type: "spring" }}
                   d={
@@ -179,10 +170,20 @@ export default function Results() {
                     " " +
                     -1000
                   }
-                  fill="#63d6ff"
-                  stroke="none"
-                  strokeWidth="10"
+                  fill="#46bff3"
+                  stroke="#46bff3"
+                  strokeWidth="5"
                 />
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, type: "spring" }}
+                  d={d}
+                  fill="none"
+                  stroke="#1e77b0"
+                  strokeWidth="5"
+                />
+
               </>
             )}
           </svg>
@@ -197,7 +198,7 @@ export default function Results() {
                     <div
                       className="absolute w-4/5 lg:w-1/3 flex items-center justify-center"
                       style={{
-                        transform: `translate(${bounds.width > 700 ? xScale(speed.speed) + 10 : 0}px, ${
+                        transform: `translate(${bounds.width > 700 ? xScale(speed.speed)/2 + 10 :20}px, ${
                           yScale(idx) - 100
                         }px)`,
                       }}

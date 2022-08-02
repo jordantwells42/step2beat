@@ -181,7 +181,7 @@ const Home: NextPage = () => {
               },
             }}
           >
-            <button className="text-3xl bg-ablue-400 text-white p-4 rounded-2xl font-bold">
+            <button className="text-3xl bg-ablue-500 text-white p-4 rounded-2xl font-bold">
               Generate your workout!
             </button>
           </Link>
